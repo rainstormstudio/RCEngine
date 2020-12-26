@@ -251,11 +251,13 @@ public:
      * @return true
      * @return false
      */
-    bool createConsole(std::string tilesetPath = "./RCE_tileset.png", int numSrcRows = 16, int numSrcCols = 16, int rows = 30, int cols = 40, int fontWidth = 20, int fontHeight = 20) {
+    bool createConsole(std::string tilesetPath = "./RCE_tileset.png", int rows = 30, int cols = 40, int fontWidth = 20, int fontHeight = 20) {
         cellRows = rows;
         cellCols = cols;
         cellWidth = fontWidth;
         cellHeight = fontHeight;
+        int numSrcRows = 16;
+        int numSrcCols = 16;
         screenWidth = cellCols * cellWidth;
         screenHeight = cellRows * cellHeight;
 
