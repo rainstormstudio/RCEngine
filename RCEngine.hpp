@@ -502,8 +502,8 @@ public:
      */
     void fill(SDL_Rect dest, Uint8 ch = ' ', SDL_Color foreColor = {0, 0, 0, 0}, SDL_Color backColor = {0, 0, 0, 0}) {
         if (0 <= dest.x && dest.x < cellCols && 0 <= dest.y && dest.y < cellRows) {
-            for (int i = dest.y; i < dest.y + dest.h && i < cellCols; i ++) {
-                for (int j = dest.x; j < dest.x + dest.w && j < cellRows; j ++) {
+            for (int i = dest.y; i < dest.y + dest.h && i < cellRows; i ++) {
+                for (int j = dest.x; j < dest.x + dest.w && j < cellCols; j ++) {
                     buffer[i][j]->setCh(ch);
                     buffer[i][j]->setForeColor(blendColor(buffer[i][j]->getForeColor(), foreColor));
                     buffer[i][j]->setBackColor(blendColor(buffer[i][j]->getBackColor(), backColor));
