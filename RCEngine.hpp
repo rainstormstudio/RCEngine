@@ -370,6 +370,61 @@ public:
     }
 
     /**
+     * @brief draws a line from (x1, y1) to (x2, y2)
+     * 
+     * @param x1 
+     * @param y1 
+     * @param x2 
+     * @param y2 
+     * @param ch 
+     * @param foreColor 
+     * @param backColor 
+     */
+    void drawLine(int x1, int y1, int x2, int y2, Uint8 ch = ' ', SDL_Color foreColor = {255, 255, 255, 255}, SDL_Color backColor = {0, 0, 0, 255}) {
+        if (0 <= x1 && x1 < cellCols && 0 <= y1 && y1 < cellRows
+            && 0 <= x2 && x2 < cellCols && 0 <= y2 && y2 < cellRows) {
+            int dx = abs(x2 - x1);
+            int dy = -abs(y2 - y1);
+
+            // straight line optimization
+            if (dx == 0) {  // vertical
+                if (y1 > y2) {
+                    std::swap(y1, y2);
+                }
+                for (int y = y1; y <= y2; y ++) {
+                    draw(x1, y, ch, foreColor, backColor);
+                }
+            } else if (dy == 0) {   // horizontal
+                if (x1 > x2) {
+                    std::swap(x1, x2);
+                }
+                for (int x = x1; x <= x2; x ++) {
+                    draw(x, y1, ch, foreColor, backColor);
+                }
+            } else {
+                int sx = x1 < x2 ? 1 : -1;
+                int sy = y1 < y2 ? 1 : -1;
+                int error = dx + dy;
+                while (1) {                    
+                    draw(x1, y1, ch, foreColor, backColor);
+                    if (x1 == x2 && y1 == y2) {
+                        break;
+                    }
+                    int error2 = 2 * error;
+                    if (error2 >= dy) {
+                        error += dy;
+                        x1 += sx;
+                    }
+                    if (error2 <= dx) {
+                        error += dx;
+                        y1 += sy;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * @brief Get the character at (x, y)
      * 
      * @param x x-coordinate (the index of column)
