@@ -789,8 +789,29 @@ private:
     }
 
 public:
+    /**
+     * @brief called when the game starts
+     * 
+     * @return true 
+     * @return false 
+     */
     virtual bool start() = 0;
+
+    /**
+     * @brief called every frame
+     * 
+     * @param deltaTime elapse time between frames
+     * @return true 
+     * @return false 
+     */
     virtual bool update(double deltaTime) = 0;
+
+    /**
+     * @brief called when the game loop stops
+     * 
+     * @return true 
+     * @return false 
+     */
     virtual bool destroy() {
         return true;
     }
