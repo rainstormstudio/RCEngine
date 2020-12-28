@@ -74,6 +74,11 @@ public:
         return true;
     }
 
+    bool render(double deltaTime) override {
+        ...
+        return true;
+    }
+
     // and optional destroy
     bool destroy() override {
         ...
@@ -612,10 +617,10 @@ public:
     }
 
     /**
-     * @brief clear screen and buffer
+     * @brief clear buffer
      * 
      */
-    void clear() {
+    void clearBuffer() {
         for (int i = 0; i < cellRows; i ++) {
             for (int j = 0; j < cellCols; j ++) {
                 buffer[i][j]->setCh(' ');
@@ -630,7 +635,7 @@ public:
      * @brief render to the screen
      * 
      */
-    void render() {
+    void renderBuffer() {
         for (int i = 0; i < cellRows; i ++) {
             for (int j = 0; j < cellCols; j ++) {
                 buffer[i][j]->render(renderer);
@@ -761,15 +766,18 @@ private:
                     prevCursorInput[i] = cursorInput[i];
                 }
 
-                clear();
-
                 if (!update(deltaTime)) {
                     loop = false;
                 }
+
+                clearBuffer();
+                if (!render(deltaTime)) {
+                    loop = false;
+                }
+                renderBuffer();
+
                 std::string title = windowTitle + " - FPS: " + std::to_string(1.0f / deltaTime);
                 SDL_SetWindowTitle(window, title.c_str());
-
-                render();
             }
 
             if (destroy()) {
@@ -805,6 +813,16 @@ public:
      * @return false 
      */
     virtual bool update(double deltaTime) = 0;
+
+    /**
+     * @brief called every frame after update and renders
+     * things to the buffer
+     * 
+     * @param deltaTime 
+     * @return true 
+     * @return false 
+     */
+    virtual bool render(double deltaTime) = 0;
 
     /**
      * @brief called when the game loop stops

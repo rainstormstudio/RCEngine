@@ -37,6 +37,10 @@ public:
         if (t > 500.0f) {
             t = 0.0f;
         }
+        return true;
+    }
+
+    bool render(double deltaTime) override {
         for (int x = 0; x < cellCols; x ++) {
             for (int y = 0; y < cellRows; y ++) {
                 draw(x, y, ' ', 

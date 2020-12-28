@@ -39,6 +39,11 @@ public:
         return true;
     }
 
+    bool render(double deltaTime) override {
+        ...
+        return true;
+    }
+
     // and optional destroy
     bool destroy() override {
         ...
